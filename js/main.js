@@ -10,7 +10,7 @@
 
 var CONFIG = {
   BOOKING_URL: 'https://bookings.reservio.com/modal/LACbqYPJJw/?backlink=https%3A%2F%2Fwww.bodytecbrno.cz%2Fkontakt%2F',
-  FACEBOOK_URL: ''   // např. 'https://www.facebook.com/bodytecbrno'
+  FACEBOOK_URL: 'https://www.facebook.com/bodytecbrno'
 };
 
 (function () {
