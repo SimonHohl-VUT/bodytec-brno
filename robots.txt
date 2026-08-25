@@ -1,0 +1,4 @@
+# NÁHLED — web zatím nemá být v Google.
+# Před ostrým spuštěním nahraď obsah za: User-agent: *  /  Allow: /
+User-agent: *
+Disallow: /
