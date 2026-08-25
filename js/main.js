@@ -1,44 +1,13 @@
 /* =============================================================================
    BodytecBrno — main.js
-   No dependencies. Everything the site needs lives here.
+   Bez závislostí. Menu, scroll-spy a rok v patičce.
 
-   >>> NASTAV TOHLE <<<
-   BOOKING_URL  — odkaz na rezervační stránku Reservio
-   FACEBOOK_URL — odkaz na facebookovou stránku
-   Dokud jsou prázdné, tlačítka jen sjedou na sekci Kontakt.
+   Odkazy (Reservio, Facebook) jsou natvrdo v index.html, ne tady — tlačítka
+   tak fungují i bez JavaScriptu. Změna odkazu = najít a nahradit v index.html.
    ========================================================================== */
-
-var CONFIG = {
-  BOOKING_URL: 'https://bookings.reservio.com/modal/LACbqYPJJw/?backlink=https%3A%2F%2Fwww.bodytecbrno.cz%2Fkontakt%2F',
-  FACEBOOK_URL: 'https://www.facebook.com/bodytecbrno'
-};
 
 (function () {
   'use strict';
-
-  /* --- externí odkazy ----------------------------------------------------- */
-  function wireLinks(selector, url, whenMissing) {
-    var links = document.querySelectorAll(selector);
-    for (var i = 0; i < links.length; i++) {
-      if (url) {
-        links[i].href = url;
-        links[i].target = '_blank';
-        links[i].rel = 'noopener noreferrer';
-      } else if (whenMissing === 'hide') {
-        var row = links[i].closest('li') || links[i];
-        row.hidden = true;
-      } else if (links[i].getAttribute('href') === '#') {
-        links[i].href = whenMissing;
-      }
-    }
-    if (!url) {
-      console.info('[BodytecBrno] Chybí odkaz pro ' + selector + ' — doplň ho v js/main.js.');
-    }
-  }
-
-  // bez odkazu: rezervační tlačítka sjedou na Kontakt, odkaz na FB se skryje
-  wireLinks('[data-booking]', CONFIG.BOOKING_URL, '#kontakt');
-  wireLinks('[data-facebook]', CONFIG.FACEBOOK_URL, 'hide');
 
   /* --- header: stín po odscrollování -------------------------------------- */
   var header = document.getElementById('header');

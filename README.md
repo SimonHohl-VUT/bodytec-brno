@@ -16,31 +16,23 @@ images/             původní fotky ve formátu PNG (na web se nenahrávají)
 
 ---
 
-## 1. Co je potřeba doplnit (2 věci)
+## 1. Odkazy (Reservio, Facebook)
 
-### a) Rezervace přes Reservio — `js/main.js`, řádek 12
+Odkazy jsou **natvrdo v `index.html`**, ne v JavaScriptu — tlačítko na
+rezervaci tak funguje i když se JS nenačte nebo ho prohlížeč drží ve staré
+verzi z cache. Je to nejdůležitější tlačítko na webu, takže nesmí záviset
+na ničem navíc.
 
-```js
-BOOKING_URL: 'https://tvoje-adresa.reservio.com',
-```
+Změna odkazu = najít a nahradit v `index.html`:
 
-Tím se přepíšou **všechna** tlačítka „Vytvořit rezervaci“ na stránce najednou.
-Dokud je pole prázdné, tlačítka jen sjedou dolů na sekci Kontakt.
+| Co | Kolikrát | Najdi |
+|---|---|---|
+| Reservio | 4× | `bookings.reservio.com` |
+| Facebook | 1× | `facebook.com/bodytecbrno` |
 
-Pokud máš místo odkazu **iframe embed** z Reservia, vlož ho v `index.html`
-do připraveného místa:
-
-```html
-<div id="reservio-embed"><!-- sem iframe --></div>
-```
-
-### b) Facebook — `js/main.js`, řádek 13
-
-```js
-FACEBOOK_URL: 'https://www.facebook.com/...'
-```
-
-Dokud je pole prázdné, odkaz na Facebook se v patičce sám skryje.
+Pokud bys chtěl mít rezervaci rovnou na stránce (v okně, ne v nové záložce),
+je v sekci Kontakt připravené místo označené `<!-- SWAP: -->` pro iframe
+z Reservia.
 
 ---
 
