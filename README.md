@@ -19,6 +19,7 @@ src/assets/favicon.svg  ikona v záložce
 src/robots.txt
 src/_redirects          přesměrování starých adres (funguje až na Cloudflare)
 .pages.yml              co smí majitel editovat v Pages CMS
+wrangler.jsonc          nasazení na Cloudflare (ukazuje na _site/)
 _site/                  vygenerovaný web (do gitu nepatří)
 images/                 původní fotky v PNG (na web se nenahrávají)
 ```
@@ -144,9 +145,12 @@ naostro, projdi popořadě:
       `<meta name="robots" content="noindex, nofollow">` i komentář nad ním.
 - [ ] **Uvolnit robots.txt** — v `src/robots.txt` nahradit `Disallow: /`
       za `Allow: /`.
-- [ ] **Založit projekt na Cloudflare Pages** — napojit na tenhle repozitář,
-      build command `npx @11ty/eleventy`, výstupní složka `_site`,
-      verze Node podle `.nvmrc`.
+- [ ] **Založit projekt na Cloudflare Workers** — napojit na tenhle repozitář,
+      build command `npx @11ty/eleventy`, deploy command `npx wrangler deploy`.
+      Název projektu musí sedět s `name` ve `wrangler.jsonc`, tedy
+      `bodytecbrno`. Verzi Node si Cloudflare vezme z `.nvmrc`.
+      (Cloudflare doporučuje nové projekty zakládat na Workers, ne na Pages;
+      statické soubory jsou tam zdarma a bez limitu požadavků.)
 - [ ] **Přepsat zpětný odkaz v Reserviu** — v administraci Reservia je
       u rezervačního formuláře odkaz zpět na `bodytecbrno.cz/kontakt/`.
       Ta adresa po spuštění nebude existovat; přepiš ji na

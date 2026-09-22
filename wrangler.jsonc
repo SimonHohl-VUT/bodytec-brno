@@ -1,0 +1,20 @@
+/**
+ * Konfigurace pro nasazení na Cloudflare Workers (statické assety).
+ *
+ * Build (`npx @11ty/eleventy`) vygeneruje _site/, deploy (`npx wrangler deploy`)
+ * obsah téhle složky nahraje. Žádný kód Workeru tu není a není potřeba —
+ * pro čistě statický web stačí "assets".
+ *
+ * Soubor _site/_redirects (přesměrování starých adres z Webnode) Cloudflare
+ * načte sám, stejně jako to dělal na Pages.
+ *
+ * Pozor: "name" musí sedět s názvem projektu v dashboardu Cloudflare.
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bodytecbrno",
+  "compatibility_date": "2026-09-22",
+  "assets": {
+    "directory": "./_site"
+  }
+}
