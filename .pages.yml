@@ -1,0 +1,227 @@
+# Konfigurace Pages CMS (https://pagescms.org) — co smí majitel editovat.
+# Po uložení se změna commitne do repozitáře a web se sám přebuildí.
+
+media:
+  input: src/assets/img
+  output: assets/img
+  categories: [image]
+
+content:
+  - name: nastaveni
+    label: Nastavení webu
+    type: file
+    path: src/_data/site.json
+    format: json
+    fields:
+      - name: banner
+        label: Oznámení nad hlavičkou
+        type: object
+        description: >-
+          Zelený proužek úplně nahoře nad menu. Používej na krátké vzkazy —
+          dovolená, svátky, změna otevírací doby.
+        fields:
+          - name: zobrazit
+            label: Zobrazit oznámení
+            type: boolean
+            default: false
+            description: Vypnuté oznámení se na webu vůbec nevykreslí.
+          - name: text
+            label: Text oznámení
+            type: text
+            description: >-
+              Jedna dvě věty. Napiš i konkrétní datum, ať je jasné, do kdy
+              to platí. Pak nezapomeň oznámení zase vypnout.
+
+      - name: telefon
+        label: Telefon
+        type: object
+        description: >-
+          Telefon je tu dvakrát: jednou tak, jak se vypíše na stránce,
+          a podruhé jako odkaz, na který se kliká z mobilu.
+        fields:
+          - name: text
+            label: Telefon (jak se zobrazí)
+            type: string
+            description: 'Včetně mezer, například: +420 604 341 440'
+          - name: odkaz
+            label: Telefon (pro proklik z mobilu)
+            type: string
+            description: >-
+              Stejné číslo, ale bez mezer a bez pomlček, například
+              +420604341440. Jinak nebude fungovat vytáčení z mobilu.
+
+      - name: email
+        label: E-mail
+        type: string
+        pattern: '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+        description: Vypíše se v kontaktech i v patičce a dá se na něj kliknout.
+
+      - name: adresa
+        label: Adresa
+        type: object
+        fields:
+          - name: ulice
+            label: Ulice a číslo
+            type: string
+          - name: mesto
+            label: Město
+            type: string
+          - name: psc
+            label: PSČ
+            type: string
+
+      - name: cislo_uctu
+        label: Číslo účtu
+        type: string
+        description: >-
+          Ve tvaru číslo účtu / kód banky. Zobrazuje se u ceníku,
+          v kontaktech i v patičce — stačí změnit tady.
+
+      - name: reservio_url
+        label: Odkaz na rezervace (Reservio)
+        type: string
+        description: >-
+          Celá adresa i s https:// na začátku. Vede sem všechna čtyři
+          tlačítka „Vytvořit rezervaci“ na webu.
+
+      - name: facebook_url
+        label: Odkaz na Facebook
+        type: string
+        description: Celá adresa i s https:// na začátku. Odkazuje se z patičky.
+
+      - name: nazev
+        label: Název studia
+        type: string
+        description: Používá se v patičce a ve strukturovaných datech pro Google.
+
+      - name: majitel
+        label: Jméno majitele
+        type: string
+
+      - name: url
+        label: Adresa webu
+        type: string
+        description: >-
+          Ostrá doména webu, i s https:// na začátku. Neměň, pokud web
+          zrovna nestěhuješ na jinou adresu.
+
+      - name: logo
+        label: Logo (text vedle ikony)
+        type: object
+        fields:
+          - name: prvni
+            label: První část (bílá)
+            type: string
+          - name: druha
+            label: Druhá část (zelená)
+            type: string
+
+      - name: jazyk
+        label: Jazyk webu
+        type: string
+        description: Kód jazyka, například cs. Neměň bez důvodu.
+
+      - name: barva_temy
+        label: Barva prohlížeče na mobilu
+        type: string
+        description: >-
+          Barva lišty prohlížeče na mobilu, ve tvaru #0B0D09.
+          Neměň bez důvodu.
+
+  - name: cenik
+    label: Ceník
+    type: file
+    path: src/_data/cenik.json
+    format: json
+    fields:
+      - name: polozky
+        label: Položky ceníku
+        type: object
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: '{nazev} — {cena}'
+        description: >-
+          Řádky tabulky s cenami. Dají se přidávat, mazat i přetahovat
+          a tím měnit pořadí.
+        fields:
+          - name: nazev
+            label: Název položky
+            type: string
+            required: true
+            description: 'Například: 6 vstupů'
+          - name: platnost
+            label: Platnost
+            type: string
+            description: >-
+              Například: 10 týdnů od zakoupení. Necháš-li prázdné,
+              v tabulce se místo toho ukáže pomlčka.
+          - name: cena
+            label: Cena celkem
+            type: string
+            description: 'Včetně měny, například: 4 200 Kč'
+          - name: za_lekci
+            label: Cena za jednu lekci
+            type: string
+            description: >-
+              Včetně měny, například: 700 Kč. U jednorázového vstupu
+              nech prázdné — ukáže se pomlčka.
+          - name: zvyraznit
+            label: Označit jako nejvýhodnější
+            type: boolean
+            default: false
+            description: Zvýrazní řádek v tabulce. Měl by být zapnutý jen u jednoho.
+
+      - name: storno
+        label: Storno poplatek
+        type: string
+        description: >-
+          Jen částka i s měnou, například: 350 Kč. Věta okolo
+          („při zrušení méně než 24 hodin předem“) je natvrdo v šabloně.
+
+      - name: platne_od
+        label: Ceny platné od
+        type: string
+        description: 'Datum tak, jak se má vypsat, například: 25. 6. 2026'
+
+      - name: poznamky
+        label: Poznámky pod ceníkem
+        type: object
+        description: >-
+          Tři boxíky pod tabulkou. Tučné slovo se udělá tak, že se obalí
+          do <strong>takhle</strong>.
+        fields:
+          - name: prevod
+            label: Platba převodem
+            type: object
+            fields:
+              - name: nadpis
+                label: Nadpis
+                type: string
+              - name: text
+                label: Text
+                type: text
+                description: >-
+                  Číslo účtu se doplní samo z Nastavení webu — sem ho
+                  nepiš, jinak tam bude dvakrát.
+          - name: benefitky
+            label: Benefitní karty
+            type: object
+            fields:
+              - name: nadpis
+                label: Nadpis
+                type: string
+              - name: text
+                label: Text
+                type: text
+          - name: multisport
+            label: MultiSport
+            type: object
+            fields:
+              - name: nadpis
+                label: Nadpis
+                type: string
+              - name: text
+                label: Text
+                type: text
