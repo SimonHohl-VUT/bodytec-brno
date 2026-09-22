@@ -1,0 +1,51 @@
+<section class="section" id="kontakt">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Kontakt a rezervace</p>
+      <h2>Rezervuj si trénink</h2>
+      <p class="lead">Vyber si volný termín v online rezervačním systému. A kdyby tě cokoliv zajímalo, zavolej nebo napiš — ozvu se.</p>
+    </div>
+
+    <div class="booking">
+      <h3>Rezervace online</h3>
+      <p>Vyber si volný termín a přijď. Úvodní lekci zvládneme celou za 45 minut.</p>
+      <a class="btn" href="{{ site.reservio_url }}" target="_blank" rel="noopener noreferrer">Vytvořit rezervaci</a>
+      <!-- SWAP: sem vlož iframe embed z Reservia (pokud ho chceš přímo na stránce) -->
+      <div id="reservio-embed"></div>
+    </div>
+
+    <div class="contact__grid">
+      <div class="info">
+        <div class="info__block">
+          <h3>Kde nás najdeš</h3>
+          <dl class="details">
+            <div><dt>Adresa</dt><dd>{{ site.adresa.ulice }}, {{ site.adresa.mesto }}, {{ site.adresa.psc }}</dd></div>
+            <div><dt>Telefon</dt><dd><a href="tel:{{ site.telefon.odkaz }}">{{ site.telefon.text }}</a></dd></div>
+            <div><dt>E-mail</dt><dd><a href="mailto:{{ site.email }}">{{ site.email }}</a></dd></div>
+            <div><dt>Číslo účtu</dt><dd>{{ site.cislo_uctu }}</dd></div>
+          </dl>
+        </div>
+
+        <div class="info__block">
+          <h3>Jak se k nám dostaneš</h3>
+          <ul>
+            <li><em>Modrá zóna B</em> — hodinu parkuješ zdarma po zadání SPZ do automatu nebo přes parkovací aplikaci.</li>
+            <li><em>MHD</em> — jsme přímo v centru, dostaneš se k nám bez problému.
+              Nejbližší zastávka je <em>Smetanova</em>, staví tu trolejbusy <em>32, 34 a 36</em>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="map">
+          <iframe
+            src="https://maps.google.com/maps?q=Smetanova%2013%2C%20602%2000%20Brno&amp;hl=cs&amp;z=16&amp;output=embed"
+            title="Mapa — Smetanova 13, Brno"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

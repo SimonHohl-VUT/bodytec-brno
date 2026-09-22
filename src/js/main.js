@@ -2,8 +2,8 @@
    BodytecBrno — main.js
    Bez závislostí. Menu, scroll-spy a rok v patičce.
 
-   Odkazy (Reservio, Facebook) jsou natvrdo v index.html, ne tady — tlačítka
-   tak fungují i bez JavaScriptu. Změna odkazu = najít a nahradit v index.html.
+   Odkazy (Reservio, Facebook) se do HTML vypíšou při buildu z src/_data/
+   site.json, ne tady — tlačítka tak fungují i bez JavaScriptu.
    ========================================================================== */
 
 (function () {

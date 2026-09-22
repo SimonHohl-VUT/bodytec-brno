@@ -1,0 +1,20 @@
+# Přesměrování starých adres z Webnode na sekce jednostránkového webu.
+# Formát Cloudflare Pages: <odkud> <kam> <kód>
+# Na GitHub Pages se tenhle soubor ignoruje — funguje až na Cloudflare.
+#
+# Starý web měl podle sitemap.xml jen pět adres. Kořen / je i nadále
+# domovská stránka, takže zbývají čtyři. Uvedené jsou i varianty bez
+# lomítka na konci, protože Webnode na ně odpovídal přesměrováním.
+#
+# Záměrně tu NENÍ souhrnné pravidlo „/* / 301“: Cloudflare přesměrování
+# aplikuje dřív, než hledá soubor, takže by takové pravidlo odklonilo
+# i /css/style.css a web by zůstal bez stylů.
+
+/o-mne/        /#o-mne        301
+/o-mne         /#o-mne        301
+/cenik/        /#cenik        301
+/cenik         /#cenik        301
+/kontakt/      /#kontakt      301
+/kontakt       /#kontakt      301
+/prvni-lekce/  /#prvni-lekce  301
+/prvni-lekce   /#prvni-lekce  301

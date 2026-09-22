@@ -1,0 +1,50 @@
+{
+  "polozky": [
+    {
+      "nazev": "Jednorázový vstup / úvodní lekce",
+      "platnost": "",
+      "cena": "750 Kč",
+      "za_lekci": "",
+      "zvyraznit": false
+    },
+    {
+      "nazev": "6 vstupů",
+      "platnost": "10 týdnů od zakoupení",
+      "cena": "4 200 Kč",
+      "za_lekci": "700 Kč",
+      "zvyraznit": false
+    },
+    {
+      "nazev": "12 vstupů",
+      "platnost": "17 týdnů od zakoupení",
+      "cena": "7 700 Kč",
+      "za_lekci": "642 Kč",
+      "zvyraznit": false
+    },
+    {
+      "nazev": "20 vstupů",
+      "platnost": "28 týdnů od zakoupení",
+      "cena": "11 900 Kč",
+      "za_lekci": "595 Kč",
+      "zvyraznit": true
+    }
+  ],
+
+  "storno": "350 Kč",
+  "platne_od": "25. 6. 2026",
+
+  "poznamky": {
+    "prevod": {
+      "nadpis": "Platba převodem",
+      "text": "Číslo účtu BODYTECBRNO:"
+    },
+    "benefitky": {
+      "nadpis": "Benefitní karty",
+      "text": "Přijímáme <strong>FLEXI PASS</strong> a <strong>SODEXO</strong> — pouze na jednotlivé vstupy."
+    },
+    "multisport": {
+      "nadpis": "MultiSport",
+      "text": "Sleva <strong>10 %</strong> na jednotlivou lekci (neplatí pro zkušební lekci) a <strong>5 %</strong> na permanentku 6 nebo 12 vstupů."
+    }
+  }
+}

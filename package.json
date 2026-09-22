@@ -1,0 +1,17 @@
+{
+  "name": "bodytecbrno",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Statický web EMS studia BodytecBrno (Eleventy + Pages CMS)",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  }
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="{{ site.jazyk }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- NÁHLED: před ostrým spuštěním smaž tenhle řádek i Disallow v robots.txt -->
+<meta name="robots" content="noindex, nofollow">
+<title>{{ title }}</title>
+<meta name="description" content="{{ popis }}">
+<meta name="author" content="{{ site.majitel }}">
+<meta name="theme-color" content="{{ site.barva_temy }}">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="{{ og.locale }}">
+<meta property="og:site_name" content="{{ site.nazev }}">
+<meta property="og:title" content="{{ og.titulek }}">
+<meta property="og:description" content="{{ og.popis }}">
+<meta name="twitter:card" content="summary_large_image">
+
+{% include "partials/jsonld.njk" %}
+</head>
+<body>
+
+<a class="skip" href="#obsah">Přeskočit na obsah</a>
+{% include "partials/banner.njk" %}
+{% include "partials/header.njk" %}
+
+<main id="obsah">
+{{ content | safe }}
+</main>
+
+{% include "partials/footer.njk" %}
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -125,6 +125,20 @@ strong { font-weight: 700; }
 .photo { border-radius: var(--r); overflow: hidden; background: var(--surface); }
 .photo img { width: 100%; }
 
+/* --- banner (oznámení nad hlavičkou) -------------------------------------- */
+/* Zelená výplň s tmavým textem — stejný vzorec jako .btn--primary a .skip.
+   Zelená jako malý text na světlém pozadí by byla nečitelná. */
+.banner {
+  background: var(--green);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: .96rem;
+  line-height: 1.5;
+  text-align: center;
+  padding-block: .75rem;
+}
+.banner a { text-decoration: underline; text-underline-offset: 2px; }
+
 /* --- header --------------------------------------------------------------- */
 .header {
   position: sticky; top: 0; z-index: 100;
