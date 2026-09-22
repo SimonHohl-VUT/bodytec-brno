@@ -1,0 +1,6 @@
+{#- Oznámení nad hlavičkou. Zapíná se v site.json → banner.zobrazit. -#}
+{%- if site.banner.zobrazit and site.banner.text %}
+<div class="banner">
+  <p class="wrap">{{ site.banner.text }}</p>
+</div>
+{%- endif %}

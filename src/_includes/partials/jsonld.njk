@@ -1,0 +1,24 @@
+{#- Strukturovaná data pro vyhledávače. Generují se z site.json a cenik.json,
+    aby se nemohla rozejít s kontakty a cenami, které jsou vidět na stránce. -#}
+<script type="application/ld+json">
+{{ {
+  "@context": "https://schema.org",
+  "@type": jsonld.typ,
+  "name": site.nazev,
+  "alternateName": jsonld.alt_nazev,
+  "description": jsonld.popis,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": site.adresa.ulice,
+    "addressLocality": site.adresa.mesto,
+    "postalCode": site.adresa.psc,
+    "addressCountry": jsonld.zeme
+  },
+  "telephone": site.telefon.odkaz,
+  "email": site.email,
+  "founder": { "@type": "Person", "name": site.majitel },
+  "priceRange": cenik.polozky | rozsahCen,
+  "currenciesAccepted": jsonld.meny,
+  "paymentAccepted": jsonld.platby
+} | dump(2) | safe }}
+</script>
