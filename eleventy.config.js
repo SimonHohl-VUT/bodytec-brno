@@ -13,8 +13,12 @@ export default function (eleventyConfig) {
     "src/js": "js",
     "src/assets": "assets",
     "src/robots.txt": "robots.txt",
-    "src/_redirects": "_redirects",
   });
+
+  /* _redirects nemá příponu, takže objektový zápis výš by z něj udělal
+     složku — tady se kopíruje samostatně. Na GitHub Pages se ignoruje,
+     smysl dává až na Cloudflare Pages. */
+  eleventyConfig.addPassthroughCopy("src/_redirects");
 
   /* --- rozsah cen pro JSON-LD (priceRange) ---------------------------------
      Počítá se z ceníku, aby nemohl začít lhát. Za jednu lekci člověk zaplatí
