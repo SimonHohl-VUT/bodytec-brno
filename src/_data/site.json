@@ -1,28 +1,28 @@
 {
-  "nazev": "BodytecBrno",
-  "logo": {
-    "prvni": "Bodytec",
-    "druha": "Brno"
-  },
-  "majitel": "Marek Kašpar",
-  "jazyk": "cs",
-  "barva_temy": "#0B0D09",
-  "url": "https://www.bodytecbrno.cz",
   "banner": {
-    "zobrazit": false,
-    "text": ""
-  },
-  "adresa": {
-    "ulice": "Smetanova 13",
-    "mesto": "Brno",
-    "psc": "602 00"
+    "zobrazit": true,
+    "text": "test"
   },
   "telefon": {
     "text": "+420 604 341 440",
     "odkaz": "+420604341440"
   },
   "email": "marekaspar@seznam.cz",
+  "adresa": {
+    "ulice": "Smetanova 13",
+    "mesto": "Brno",
+    "psc": "602 00"
+  },
   "cislo_uctu": "2506198519 / 5500",
   "reservio_url": "https://bookings.reservio.com/modal/LACbqYPJJw/?backlink=https%3A%2F%2Fwww.bodytecbrno.cz%2Fkontakt%2F",
-  "facebook_url": "https://www.facebook.com/bodytecbrno"
+  "facebook_url": "https://www.facebook.com/bodytecbrno",
+  "nazev": "BodytecBrno",
+  "majitel": "Marek Kašpar",
+  "url": "https://www.bodytecbrno.cz",
+  "logo": {
+    "prvni": "Bodytec",
+    "druha": "Brno"
+  },
+  "jazyk": "cs",
+  "barva_temy": "#0B0D09"
 }
