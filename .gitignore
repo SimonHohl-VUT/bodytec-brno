@@ -1,2 +1,4 @@
 .DS_Store
 images/
+node_modules/
+_site/
