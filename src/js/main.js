@@ -88,10 +88,9 @@
   /* --- 5. okno s oznámením ------------------------------------------------- */
   var okno = document.getElementById('oznameni-okno');
 
-  if (okno && typeof okno.show === 'function') {
+  if (okno && typeof okno.showModal === 'function') {
     var KLIC = 'bt-oznameni';
     var podpis = okno.getAttribute('data-podpis');
-    var blokujici = okno.hasAttribute('data-blokujici');
 
     /* localStorage umí vyhodit výjimku (anonymní okno, zablokovaná data),
        takže každý přístup je obalený. Když nefunguje, okno se ukáže při
@@ -106,11 +105,12 @@
 
     if (pamet() !== podpis) {
       /* Jedno místo pro všechny důsledky zavření, ať přišlo z tlačítka,
-         z Escape u modální varianty (nativní) nebo z Escape u nemodální
-         (přes `vrstvy`). Zavření se vždy počítá jako potvrzení — brát
-         lidem Escape by byla past na klávesnici. */
+         z kliknutí mimo okno nebo z klávesy Esc (tu obsluhuje prohlížeč
+         sám u modálního dialogu). Zavření se vždy počítá jako potvrzení:
+         okno, ze kterého se nedá dostat klávesnicí, je past. */
       okno.addEventListener('close', function () {
         pamet(podpis);
+        document.documentElement.classList.remove('is-locked');
         var logo = document.querySelector('.header .logo');
         if (logo) logo.focus();
       });
@@ -119,18 +119,16 @@
         okno.close();
       });
 
-      if (blokujici) {
-        okno.showModal();          /* fokus si vezme tlačítko s [autofocus] */
-      } else {
-        okno.show();
-        /* Nemodální dialog se sám neohlásí, proto do něj fokus přesuneme.
-           Leží hned za hlavičkou, takže je to skok dopředu v pořadí čtení. */
-        okno.focus();
-        vrstvy.push({
-          otevrena: function () { return okno.open; },
-          zavri: function () { okno.close(); }
-        });
-      }
+      /* Kliknutí mimo okno ho zavře. Modální <dialog> zabírá celou plochu
+         obrazovky včetně tmavého pozadí, takže kliknutí „vedle“ dorazí na
+         samotný dialog. Klik na cokoliv uvnitř bublá z potomka, proto se
+         porovnává cíl. */
+      okno.addEventListener('click', function (e) {
+        if (e.target === okno) okno.close();
+      });
+
+      document.documentElement.classList.add('is-locked');
+      okno.showModal();            /* fokus si vezme tlačítko s [autofocus] */
     }
   }
 })();
