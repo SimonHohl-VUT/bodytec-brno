@@ -6,8 +6,8 @@
     "text": "Dnes je zavřeno z technických důvodů. Domluvené lekce přesouváme, ozvu se ti telefonicky.",
     "vyskakovaci_okno": true,
     "tlacitko": "Rozumím",
-    "odkaz": "",
-    "odkaz_text": "Více informací"
+    "odkaz": "https://www.youtube.com",
+    "odkaz_text": "test"
   },
   "telefon": {
     "text": "+420 604 341 440",
