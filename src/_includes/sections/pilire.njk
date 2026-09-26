@@ -1,20 +1,29 @@
+{#- Pás čísel. Dřív to byly tři stejné karty s rámečkem, teď jsou to data
+    oddělená vlasovými linkami.
+
+    Popisky jsou záměrně <p>, ne <h3>: je to štítek u čísla, ne oddíl
+    dokumentu. Sekce tím nezavádí nadpis úrovně 3 nad prvním <h2> stránky,
+    takže pořadí nadpisů běží h1 → h2 bez přeskočené úrovně.
+
+    Všechna tři čísla jsou skutečná. Čtvrté („hubnutí“) žádné číslo nemělo,
+    dřív se místo něj kreslila šipka, takže se jeho text přesunul ke 1×. -#}
 <section class="section section--surface" aria-label="Hlavní přínosy">
   <div class="wrap">
-    <ul class="pillars">
-      <li class="pillar">
-        <p class="pillar__num">95 %</p>
-        <h3>Zvýšení síly</h3>
-        <p>Intenzivně a rovnoměrně procvičíš 95 % svalů na celém těle — včetně těch, na které v posilovně jen tak nedosáhneš.</p>
+    <ul class="stats">
+      <li class="stat">
+        <p class="stat__num">95 %</p>
+        <p class="stat__label">Svalů v jedné lekci</p>
+        <p>Intenzivně a rovnoměrně procvičíš 95 % svalů na celém těle, včetně těch, na které v posilovně jen tak nedosáhneš.</p>
       </li>
-      <li class="pillar">
-        <p class="pillar__num">↓</p>
-        <h3>Hubnutí</h3>
+      <li class="stat">
+        <p class="stat__num">20</p>
+        <p class="stat__label">Minut na celé tělo</p>
+        <p>Jedna lekce trvá dvacet minut. Nemusíš kvůli ní plánovat celé odpoledne.</p>
+      </li>
+      <li class="stat">
+        <p class="stat__num">1&times;</p>
+        <p class="stat__label">Týdně stačí</p>
         <p>EMS napomáhá hubnout a zrychluje spalování. Tělo pracuje dál i po tom, co si sundáš vestu.</p>
-      </li>
-      <li class="pillar">
-        <p class="pillar__num">20</p>
-        <h3>Minut, 1× týdně</h3>
-        <p>Cvičení EMS je natolik komplexní, že stačí jednou týdně dvacet minut — a citelné výsledky se dostaví.</p>
       </li>
     </ul>
   </div>

@@ -1,0 +1,34 @@
+{#- Vyskakovací okno k oznámení.
+
+    Je to nativní <dialog> vykreslený ZAVŘENÝ, takže bez JavaScriptu prostě
+    není vidět a nic se nerozbije. Otevírá ho main.js:
+      - běžně přes .show()      → nemodální, stránka jde dál používat
+      - s `vyzadovat_potvrzeni` → .showModal(), přes celou stránku
+
+    Žádná informace nežije jen tady. Text je vždy i v proužku výš. -#}
+{%- if oznameni.zobrazit and oznameni.okno %}
+<dialog class="oznameni oznameni-okno" id="oznameni-okno"
+        data-rezim="{{ oznameni.rezim }}"
+        data-podpis="{{ oznameni.podpis }}"
+        {%- if oznameni.blokujici %} data-blokujici role="alertdialog"{% endif %}
+        aria-labelledby="oznameni-nadpis" tabindex="-1">
+  <div class="oznameni-okno__body">
+    <div class="oznameni-okno__head">
+      <span class="oznameni-okno__icon">{{ ikony.ikona(oznameni.rezim) }}</span>
+      {#- Záměrně <p>, ne <h2>: dialog leží v DOM před <h1> stránky, takže
+          nadpis úrovně 2 by rozbil pořadí nadpisů. Jméno dialogu nese
+          aria-labelledby, které funguje na jakémkoliv prvku. -#}
+      <p class="oznameni-okno__nadpis" id="oznameni-nadpis">{{ oznameni.nadpis }}</p>
+    </div>
+    <p class="oznameni-okno__text">{{ oznameni.text | safe }}</p>
+  </div>
+  <div class="oznameni-okno__foot">
+    {%- if oznameni.odkaz %}
+    <a class="btn btn--ghost btn--sm" href="{{ oznameni.odkaz }}" target="_blank" rel="noopener noreferrer">{{ oznameni.odkaz_text }}</a>
+    {%- endif %}
+    {#- U blokující varianty bere fokus rovnou tlačítko, u nemodální ho
+        main.js posadí na celý dialog, aby se oznámení neminulo. -#}
+    <button class="btn btn--primary" type="button" data-zavrit{% if oznameni.blokujici %} autofocus{% endif %}>{{ oznameni.tlacitko }}</button>
+  </div>
+</dialog>
+{%- endif %}

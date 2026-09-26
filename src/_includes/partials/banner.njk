@@ -1,6 +1,13 @@
-{#- Oznámení nad hlavičkou. Zapíná se v site.json → banner.zobrazit. -#}
-{%- if site.banner.zobrazit and site.banner.text %}
-<div class="banner">
-  <p class="wrap">{{ site.banner.text }}</p>
+{#- Barevný proužek POD hlavičkou. Zapíná se v site.json → banner.zobrazit.
+    Vykresluje se na serveru, takže platí i bez JavaScriptu — je to trvalý
+    záznam oznámení, zatímco okno je jen důraznější upozornění navíc.
+    `oznameni` připravuje filtr v eleventy.config.js. -#}
+{%- if oznameni.zobrazit %}
+<div class="oznameni banner" data-rezim="{{ oznameni.rezim }}">
+  <p class="wrap banner__inner">
+    <span class="banner__icon">{{ ikony.ikona(oznameni.rezim) }}</span>
+    {#- Význam nesmí nést jen barva, proto je název režimu i v textu. -#}
+    <span><span class="sr-only">{{ oznameni.nazev_rezimu }}: </span>{{ oznameni.text | safe }}</span>
+  </p>
 </div>
 {%- endif %}

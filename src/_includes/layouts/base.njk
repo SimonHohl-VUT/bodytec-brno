@@ -9,7 +9,14 @@
 <meta name="description" content="{{ popis }}">
 <meta name="author" content="{{ site.majitel }}">
 <meta name="theme-color" content="{{ site.barva_temy }}">
+<link rel="canonical" href="{{ site.url }}/">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+{#- Geist, hostovaný u nás. Obě podmnožiny se přednačítají: `latin` nese
+    á í é ú ó ý, `latin-ext` nese ě š č ř ž ů ď ť ň. V češtině jsou obě
+    potřeba hned v prvním nadpisu, takže čekat s jednou z nich nemá smysl. -#}
+<link rel="preload" href="assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/geist-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
 
 <meta property="og:type" content="website">
@@ -17,15 +24,26 @@
 <meta property="og:site_name" content="{{ site.nazev }}">
 <meta property="og:title" content="{{ og.titulek }}">
 <meta property="og:description" content="{{ og.popis }}">
+<meta property="og:url" content="{{ site.url }}/">
+<meta property="og:image" content="{{ site.url }}/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Marek Kašpar v EMS vestě ve studiu BodytecBrno">
 <meta name="twitter:card" content="summary_large_image">
 
 {% include "partials/jsonld.njk" %}
 </head>
 <body>
 
+{#- Oznámení se spočítá jednou a obě šablony (proužek i okno) si ho vezmou
+    z kontextu. Filtr ošetří i starý nebo chybějící tvar v site.json. -#}
+{%- set oznameni = site.banner | pripravOznameni %}
+{%- import "partials/oznameni-ikona.njk" as ikony %}
+
 <a class="skip" href="#obsah">Přeskočit na obsah</a>
-{% include "partials/banner.njk" %}
 {% include "partials/header.njk" %}
+{% include "partials/banner.njk" %}
+{% include "partials/oznameni-okno.njk" %}
 
 <main id="obsah">
 {{ content | safe }}
