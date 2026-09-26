@@ -14,23 +14,93 @@ content:
     format: json
     fields:
       - name: banner
-        label: Oznámení nad hlavičkou
+        label: Oznámení
         type: object
         description: >-
-          Zelený proužek úplně nahoře nad menu. Používej na krátké vzkazy —
-          dovolená, svátky, změna otevírací doby.
+          Barevný proužek pod menu a k němu okno, které vyskočí při prvním
+          otevření webu. Na krátké vzkazy: dovolená, svátky, změna otevírací
+          doby, akce.
         fields:
           - name: zobrazit
             label: Zobrazit oznámení
             type: boolean
             default: false
-            description: Vypnuté oznámení se na webu vůbec nevykreslí.
+            description: >-
+              Vypnuté oznámení se na webu vůbec nevykreslí, ani proužek, ani
+              okno. Text si přitom můžeš nechat připravený na příště.
+
+          - name: rezim
+            label: Typ oznámení
+            type: select
+            default: varovani
+            options:
+              values:
+                - value: varovani
+                  label: 'Upozornění (jantarové) – zavřeno, změna otevírací doby'
+                - value: akce
+                  label: 'Novinka (zelené) – sleva, akce, nová služba'
+                - value: info
+                  label: 'Informace (šedozelené) – neutrální vzkaz'
+                - value: urgentni
+                  label: 'Důležité (červené) – jen na vážné věci'
+            description: >-
+              Řídí barvu, ikonu i vyznění. Červené si nech na opravdu vážné
+              situace, jinak si na něj lidi zvyknou a přestanou si ho všímat.
+
+          - name: nadpis
+            label: Nadpis okna
+            type: string
+            description: >-
+              Dvě tři slova, například „Vánoční zavírací dny“. Ukáže se jako
+              titulek vyskakovacího okna. Necháš-li prázdné, doplní se podle
+              typu oznámení.
+
           - name: text
             label: Text oznámení
             type: text
             description: >-
               Jedna dvě věty. Napiš i konkrétní datum, ať je jasné, do kdy
-              to platí. Pak nezapomeň oznámení zase vypnout.
+              to platí. Pak nezapomeň oznámení zase vypnout. Tučně se udělá
+              obalením do <strong>takhle</strong>.
+
+          - name: vyskakovaci_okno
+            label: Ukázat i vyskakovací okno
+            type: boolean
+            default: true
+            description: >-
+              Okno vyskočí při prvním otevření webu a zmizí, až ho návštěvník
+              potvrdí. Pak se mu už neukazuje. Znovu se ukáže všem, jakmile
+              tady změníš text, nadpis nebo typ oznámení. Proužek pod menu je
+              vidět pořád.
+
+          - name: vyzadovat_potvrzeni
+            label: Okno musí návštěvník potvrdit (ztmaví celou stránku)
+            type: boolean
+            default: false
+            description: >-
+              Zapni jen u vážných věcí. Okno se postaví přes celou stránku
+              a než ho člověk potvrdí, nedá se s webem nic dělat. U běžných
+              vzkazů to nech vypnuté: okno pak jen vyjede dole a web jde
+              mezitím normálně používat.
+
+          - name: tlacitko
+            label: Text potvrzovacího tlačítka
+            type: string
+            default: Rozumím
+            description: 'Krátce, například: Rozumím, Beru na vědomí, Zavřít.'
+
+          - name: odkaz
+            label: Odkaz v okně
+            type: string
+            description: >-
+              Nepovinné. Celá adresa i s https:// na začátku. Hodí se u akcí,
+              třeba rovnou na rezervace. Necháš-li prázdné, tlačítko nebude.
+
+          - name: odkaz_text
+            label: Text odkazu
+            type: string
+            default: Více informací
+            description: 'Například: Rezervovat termín.'
 
       - name: telefon
         label: Telefon

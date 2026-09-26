@@ -1,15 +1,32 @@
 /* =============================================================================
    BodytecBrno — main.js
-   Bez závislostí. Menu, scroll-spy a rok v patičce.
+   Bez závislostí. Menu, scroll-spy, rok v patičce a okno s oznámením.
 
    Odkazy (Reservio, Facebook) se do HTML vypíšou při buildu z src/_data/
    site.json, ne tady — tlačítka tak fungují i bez JavaScriptu.
+
+   Jediná věc, která JavaScript potřebuje, je vyskakovací okno s oznámením.
+   Bez JS se nevykreslí vůbec (viz .oznameni-okno:not([open]) v CSS) a nic se
+   tím neztratí: stejný text je i v proužku pod hlavičkou, který se skládá
+   při buildu.
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  /* --- header: stín po odscrollování -------------------------------------- */
+  /* --- sdílené: Escape zavírá vždy jen nejvrchnější otevřenou vrstvu -------
+     Menu i okno na Escape reagují. Jeden posluchač a jedno pořadí priorit
+     je míň chyb než dva posluchače, které o sobě nevědí.                   */
+  var vrstvy = [];
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    for (var i = 0; i < vrstvy.length; i++) {
+      if (vrstvy[i].otevrena()) { vrstvy[i].zavri(); return; }
+    }
+  });
+
+  /* --- 1. header: stín po odscrollování ------------------------------------ */
   var header = document.getElementById('header');
   function onScroll() {
     header.classList.toggle('is-scrolled', window.scrollY > 8);
@@ -17,7 +34,7 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  /* --- mobilní menu -------------------------------------------------------- */
+  /* --- 2. mobilní menu ----------------------------------------------------- */
   var toggle = document.getElementById('nav-toggle');
   var nav = document.getElementById('nav');
 
@@ -35,18 +52,18 @@
     if (e.target.closest('a')) setNav(false);
   });
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && nav.classList.contains('is-open')) {
-      setNav(false);
-      toggle.focus();
-    }
+  /* Menu se registruje první: kdo ho právě otevřel, čeká, že Escape zavře
+     jeho, a ne okno pod ním. */
+  vrstvy.push({
+    otevrena: function () { return nav.classList.contains('is-open'); },
+    zavri: function () { setNav(false); toggle.focus(); }
   });
 
   window.addEventListener('resize', function () {
     if (window.innerWidth > 980) setNav(false);
   });
 
-  /* --- scroll-spy ---------------------------------------------------------- */
+  /* --- 3. scroll-spy ------------------------------------------------------- */
   var navLinks = Array.prototype.slice.call(nav.querySelectorAll('.nav__link'));
   var sections = navLinks
     .map(function (link) { return document.querySelector(link.getAttribute('href')); })
@@ -65,6 +82,55 @@
     sections.forEach(function (section) { spy.observe(section); });
   }
 
-  /* --- rok v patičce ------------------------------------------------------- */
+  /* --- 4. rok v patičce ---------------------------------------------------- */
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* --- 5. okno s oznámením ------------------------------------------------- */
+  var okno = document.getElementById('oznameni-okno');
+
+  if (okno && typeof okno.show === 'function') {
+    var KLIC = 'bt-oznameni';
+    var podpis = okno.getAttribute('data-podpis');
+    var blokujici = okno.hasAttribute('data-blokujici');
+
+    /* localStorage umí vyhodit výjimku (anonymní okno, zablokovaná data),
+       takže každý přístup je obalený. Když nefunguje, okno se ukáže při
+       každém načtení — to je správné selhání, oznámení se neztratí. */
+    function pamet(hodnota) {
+      try {
+        if (hodnota === undefined) return window.localStorage.getItem(KLIC);
+        window.localStorage.setItem(KLIC, hodnota);
+      } catch (e) {}
+      return null;
+    }
+
+    if (pamet() !== podpis) {
+      /* Jedno místo pro všechny důsledky zavření, ať přišlo z tlačítka,
+         z Escape u modální varianty (nativní) nebo z Escape u nemodální
+         (přes `vrstvy`). Zavření se vždy počítá jako potvrzení — brát
+         lidem Escape by byla past na klávesnici. */
+      okno.addEventListener('close', function () {
+        pamet(podpis);
+        var logo = document.querySelector('.header .logo');
+        if (logo) logo.focus();
+      });
+
+      okno.querySelector('[data-zavrit]').addEventListener('click', function () {
+        okno.close();
+      });
+
+      if (blokujici) {
+        okno.showModal();          /* fokus si vezme tlačítko s [autofocus] */
+      } else {
+        okno.show();
+        /* Nemodální dialog se sám neohlásí, proto do něj fokus přesuneme.
+           Leží hned za hlavičkou, takže je to skok dopředu v pořadí čtení. */
+        okno.focus();
+        vrstvy.push({
+          otevrena: function () { return okno.open; },
+          zavri: function () { okno.close(); }
+        });
+      }
+    }
+  }
 })();

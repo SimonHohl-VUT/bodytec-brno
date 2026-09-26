@@ -10,10 +10,11 @@ src/index.njk           poskládá sekce dohromady + metadata stránky
 src/_data/site.json     kontakty, odkazy, banner   ← ZDE se mění odkazy
 src/_data/cenik.json    ceník a poznámky pod ním
 src/_includes/layouts/  kostra stránky (base.njk)
-src/_includes/partials/ hlavička, patička, logo, banner, data pro Google
+src/_includes/partials/ hlavička, patička, logo, oznámení, data pro Google
 src/_includes/sections/ jedna sekce = jeden soubor
 src/css/style.css       styly
-src/js/main.js          menu, scroll-spy, rok v patičce
+src/assets/fonts/       písmo Geist (latin + latin-ext, kvůli češtině obojí)
+src/js/main.js          menu, scroll-spy, rok v patičce, okno s oznámením
 src/assets/img/         fotky
 src/assets/favicon.svg  ikona v záložce
 src/robots.txt
@@ -49,7 +50,7 @@ Po uložení se web sám přebuildí a nasadí. Jsou tam dvě obrazovky:
 
 | Pole | Co s tím |
 |---|---|
-| Oznámení nad hlavičkou | zelený proužek úplně nahoře — dovolená, svátky |
+| Oznámení | proužek pod menu + vyskakovací okno, ve čtyřech režimech |
 | Telefon | zvlášť tvar pro zobrazení, zvlášť pro proklik z mobilu |
 | E-mail, adresa, číslo účtu | kontakty |
 | Odkaz na rezervace | Reservio |
@@ -63,18 +64,61 @@ pod tabulkou.
 Dlouhé texty (Proč EMS, O mně, kroky u první lekce) přes CMS editovat
 **nejdou** — jsou natvrdo v šablonách v `src/_includes/sections/`.
 
-### Banner
+### Oznámení: proužek a vyskakovací okno
+
+Jedno zapnutí v CMS ovládá dvě věci najednou: **barevný proužek pod menu**
+a **okno, které vyskočí při prvním otevření webu**. Okno se zavře, až ho
+návštěvník potvrdí, takže se oznámení nedá jen tak přehlédnout.
 
 V `site.json` → `banner`:
 
 ```json
 "banner": {
   "zobrazit": true,
-  "text": "Od 24. do 31. 12. mám zavřeno."
+  "rezim": "varovani",
+  "nadpis": "Dnes zavřeno",
+  "text": "Dnes je zavřeno z technických důvodů.",
+  "vyskakovaci_okno": true,
+  "vyzadovat_potvrzeni": false,
+  "tlacitko": "Rozumím",
+  "odkaz": "",
+  "odkaz_text": "Více informací"
 }
 ```
 
-Když je `zobrazit` vypnuté, banner se do HTML vůbec nevygeneruje.
+Když je `zobrazit` vypnuté, nevygeneruje se do HTML ani proužek, ani okno.
+
+**Čtyři režimy** (`rezim`) mění barvu, ikonu i vyznění:
+
+| Režim | Barva | Na co |
+|---|---|---|
+| `varovani` | jantarová | zavřeno, změna otevírací doby |
+| `akce` | zelená | sleva, novinka, akce |
+| `info` | šedozelená | neutrální vzkaz |
+| `urgentni` | červená | jen vážné věci |
+
+Každý režim má vlastní ikonu, ne jen barvu — kvůli lidem, kteří barvy
+nerozliší.
+
+**Dvě věci, které tě jinak překvapí:**
+
+1. Komu se okno jednou ukázalo a potvrdil ho, tomu se už neukazuje. Znovu
+   vyskočí všem ve chvíli, kdy změníš `text`, `nadpis` nebo `rezim`.
+   Prohlížeč si totiž pamatuje podpis obsahu, ne „už to viděl“.
+2. Z toho plyne: vypnout a zase zapnout oznámení se **stejným** textem okno
+   znovu nevyvolá. Když ho chceš ukázat znovu, změň v textu aspoň slovo.
+
+Potvrzení se ukládá jen do prohlížeče návštěvníka (`localStorage`). Je to
+způsob, jak oznámení nešlo minout, **ne důkaz**, že ho někdo konkrétní
+viděl — smaže se s daty webu a v anonymním okně tam není vůbec.
+
+`vyzadovat_potvrzeni` zapíná blokující variantu: okno se postaví přes celou
+stránku a než ho člověk potvrdí, nedá se s webem nic dělat. Nech ji vypnutou,
+pokud nejde o něco vážného. Zavřít okno jde vždy i klávesou Esc; brát lidem
+tuhle možnost by byla past na klávesnici.
+
+Bez JavaScriptu okno nevyskočí, ale proužek se vykreslí normálně a je v něm
+celý text — žádná informace nežije jen v okně.
 
 ---
 
@@ -114,20 +158,34 @@ a odečítače obrazovky.
 
 ---
 
-## 5. Barvy
+## 5. Barvy a písmo
 
 Zelená `#A6CD3E` má výborný kontrast na černé (10,6:1), ale na bílé je
-nečitelná (1,8:1). Proto je web tmavý a zelená se používá jako akcent nebo
-jako výplň tlačítek s černým textem — nikdy jako malý zelený text na bílé.
+nečitelná (1,8:1). Proto je web tmavý **celý** a zelená se používá jako akcent
+nebo jako výplň tlačítek s tmavým textem, nikdy jako malý zelený text na bílé.
 Všechny barvy jsou nahoře v `src/css/style.css` v bloku `:root`.
+
+Ceník byl dřív jediný světlý pruh a kvůli tomu potřeboval vlastní odstín
+zelené. Teď je tmavý jako zbytek webu a ta výjimka je pryč.
+
+Čtyři barvy oznámení (`--tone-*`) jsou schválně teplé a stejně světlé, aby
+vedle sebe působily jako jedna rodina. S tmavým textem mají kontrast 7,7 až
+12,1:1, takže všechny projdou i přísnějším stupněm WCAG AAA.
+
+**Písmo je Geist**, uložené přímo u nás v `src/assets/fonts/` ve dvou
+podmnožinách. `latin` nese á í é ú ó ý, `latin-ext` nese ě š č ř ž ů ď ť ň.
+Obě jsou povinné, bez `latin-ext` by se rozbila polovina češtiny. Hostujeme
+si ho sami, takže si prohlížeč nic netahá z Googlu a neřeší se kvůli tomu
+cookies ani GDPR.
 
 ---
 
 ## 6. Mapa a formulář
 
 Mapa v sekci Kontakt je vložený **widget Map Google** — funguje bez API klíče
-a bez registrace. Adresa se mění v `src/_includes/sections/kontakt.njk`
-v atributu `src` iframu. Pozor: widget načítá obsah z Googlu a ukládá
+a bez registrace. Adresu si bere ze `site.json` → `adresa`, stejně jako text
+vedle mapy, takže se po změně v CMS nemůžou rozejít. Dřív byla v odkazu mapy
+napsaná zvlášť a na tohle se zapomínalo. Pozor: widget načítá obsah z Googlu a ukládá
 cookies, což je u českých webů běžné, ale pokud řešíš cookie lištu,
 patří mezi „marketingové" cookies.
 

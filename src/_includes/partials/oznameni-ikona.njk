@@ -1,0 +1,19 @@
+{#- Ikony oznámení. Jedna na každý režim, záměrně různé obrysy, aby se
+    režimy poznaly i v odstínech šedi a lidmi, kteří barvy nerozliší.
+    Kreslí se z currentColor, takže barvu řídí --tone v CSS.
+
+    Styl (viewBox, stroke-width, aria-hidden) odpovídá ikonám v header.njk
+    a prvni-lekce.njk. Projekt nemá build krok na ikony, takže inline SVG
+    je tu konzistentní volba, ne obcházení knihovny. -#}
+
+{%- macro ikona(rezim) -%}
+{%- if rezim == "akce" -%}
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg>
+{%- elif rezim == "varovani" -%}
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4 2.8 20h18.4z"/><path d="M12 10v4.5"/><path d="M12 17.6h.01"/></svg>
+{%- elif rezim == "urgentni" -%}
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8.6 2.8h6.8L21.2 8.6v6.8L15.4 21.2H8.6L2.8 15.4V8.6z"/><path d="M12 7.6v5"/><path d="M12 16.2h.01"/></svg>
+{%- else -%}
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.2"/><path d="M12 11v5.4"/><path d="M12 7.7h.01"/></svg>
+{%- endif -%}
+{%- endmacro -%}

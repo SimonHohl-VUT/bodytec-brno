@@ -1,48 +1,69 @@
+{#- Osm položek v jednom seznamu se nečte, hlavně proto, že to nejsou kroky
+    v čase, ale „co potřebuješ vědět“. Jsou proto rozdělené do tří skupin
+    podle toho, kdy se to člověka týká. Texty zůstaly slovo za slovem stejné.
+
+    Hierarchie: h2 sekce → h3 skupina → h4 položka. -#}
 <section class="section" id="prvni-lekce">
   <div class="wrap">
     <div class="lesson-head">
       <div class="section-head">
-        <p class="eyebrow">První lekce</p>
         <h2>Co tě čeká, když přijdeš poprvé</h2>
         <p class="lead">Nic si nechystej ani nestuduj. Tady je všechno, co potřebuješ vědět předem.</p>
       </div>
       <div class="photo"><img src="assets/img/lekce-deti.jpg" width="402" height="571" loading="lazy" alt="Klientka při EMS lekci, děti si mezitím hrají s hračkami ve studiu"></div>
     </div>
 
-    <ol class="steps">
-      <li class="step">
-        <span class="step__n" aria-hidden="true">1</span>
-        <div><h3>Nepotřebuješ vůbec nic</h3><p>Stačí přijít v dobré náladě. Zbytek je na nás.</p></div>
-      </li>
-      <li class="step">
-        <span class="step__n" aria-hidden="true">2</span>
-        <div><h3>Oblečení máme</h3><p>Při cvičení je nutné mít naše speciální oblečení. Boty nejsou potřeba, ponožky podle chuti.</p></div>
-      </li>
-      <li class="step">
-        <span class="step__n" aria-hidden="true">3</span>
-        <div><h3>Přijď najedený a napitý</h3><p>Ideální je nebýt vyhladovělý ani vyprahlý — a nechodit nemocný.</p></div>
-      </li>
-      <li class="step">
-        <span class="step__n" aria-hidden="true">4</span>
-        <div><h3>Sprcha je v ceně</h3><p>Po lekci je k dispozici sprcha, ručník, mýdlo, deodorant i vatové tyčinky. Všechno v ceně.</p></div>
-      </li>
-      <li class="step">
-        <span class="step__n" aria-hidden="true">5</span>
-        <div><h3>Doraz o pět minut dřív</h3><p>Přijď prosím 5 minut před domluveným časem, ať můžeme začít včas.</p></div>
-      </li>
-      <li class="step">
-        <span class="step__n" aria-hidden="true">6</span>
-        <div><h3>Celkem asi 45 minut</h3><p>Včetně převlečení a sprchy ti to zabere zhruba tři čtvrtě hodiny — a máš hotovo.</p></div>
-      </li>
-      <li class="step">
-        <span class="step__n" aria-hidden="true">7</span>
-        <div><h3>Parkování zdarma</h3><p>Zaparkuj v modré zóně. Po zadání SPZ do automatu máš hodinu parkování zdarma.</p></div>
-      </li>
-      <li class="step">
-        <span class="step__n" aria-hidden="true">8</span>
-        <div><h3>Děti vezmi s sebou</h3><p>Máme hračky i WiFi ;)</p></div>
-      </li>
-    </ol>
+    <div class="clusters">
+      <section class="cluster">
+        <h3 class="cluster__title">Než vyrazíš</h3>
+        <ul class="cluster__items">
+          <li>
+            <h4>Nepotřebuješ vůbec nic</h4>
+            <p>Stačí přijít v dobré náladě. Zbytek je na nás.</p>
+          </li>
+          <li>
+            <h4>Přijď najedený a napitý</h4>
+            <p>Ideální je nebýt vyhladovělý ani vyprahlý. A nechodit nemocný.</p>
+          </li>
+          <li>
+            <h4>Děti vezmi s sebou</h4>
+            <p>Máme hračky i WiFi ;)</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="cluster">
+        <h3 class="cluster__title">Když dorazíš</h3>
+        <ul class="cluster__items">
+          <li>
+            <h4>Doraz o pět minut dřív</h4>
+            <p>Přijď prosím 5 minut před domluveným časem, ať můžeme začít včas.</p>
+          </li>
+          <li>
+            <h4>Parkování zdarma</h4>
+            <p>Zaparkuj v modré zóně. Po zadání SPZ do automatu máš hodinu parkování zdarma.</p>
+          </li>
+          <li>
+            <h4>Oblečení máme</h4>
+            <p>Při cvičení je nutné mít naše speciální oblečení. Boty nejsou potřeba, ponožky podle chuti.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="cluster">
+        <h3 class="cluster__title">Po lekci</h3>
+        <ul class="cluster__items">
+          <li>
+            <h4>Sprcha je v ceně</h4>
+            <p>Po lekci je k dispozici sprcha, ručník, mýdlo, deodorant i vatové tyčinky. Všechno v ceně.</p>
+          </li>
+          <li>
+            <h4>Celkem asi 45 minut</h4>
+            <p>Včetně převlečení a sprchy ti to zabere zhruba tři čtvrtě hodiny a máš hotovo.</p>
+          </li>
+        </ul>
+      </section>
+    </div>
 
     <div class="safety">
       <div class="safety__icon" aria-hidden="true">
@@ -51,7 +72,7 @@
       <div>
         <h3>Nemusíš mít z ničeho strach</h3>
         <p>
-          Cílem je, aby ses těšil na další lekci. Je to naprosto bezpečné — používáme
+          Cílem je, aby ses těšil na další lekci. Je to naprosto bezpečné, používáme
           stejný impulz nízkého napětí, který ovlivňuje pouze příčně pruhovanou
           svalovinu, stejně jako při rehabilitacích.
         </p>

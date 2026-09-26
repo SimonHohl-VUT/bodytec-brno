@@ -1,9 +1,13 @@
-<section class="section section--light" id="cenik">
+{#- Ceník byl dřív jediný SVĚTLÝ pruh v jinak tmavém webu. To si vynucovalo
+    vlastní odstín zelené (#4C6410), protože značková zelená je na bílé
+    nečitelná, a k tomu celou sadu výjimek v CSS. Teď je tmavý jako zbytek
+    webu a ty výjimky jsou smazané. -#}
+<section class="section section--surface" id="cenik">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Ceník</p>
       <h2>Jasné ceny, žádné členské poplatky</h2>
-      <p class="lead">Plať za jednotlivé lekce, nebo si pořiď permanentku — čím víc vstupů, tím nižší cena za lekci.</p>
+      <p class="lead">Plať za jednotlivé lekce, nebo si pořiď permanentku. Čím víc vstupů, tím nižší cena za lekci.</p>
     </div>
 
     <table class="price-table">
@@ -17,12 +21,15 @@
         </tr>
       </thead>
       <tbody>
+{#- Prázdná buňka se dřív vyplňovala pomlčkou. Odečítač obrazovky z pomlčky
+    nic nepozná, takže je tam teď „neuvedeno“ jen pro něj a vizuálně zůstává
+    prázdno. Na mobilu se prázdné buňky skrývají úplně (.is-empty). -#}
 {%- for polozka in cenik.polozky %}
         <tr{% if polozka.zvyraznit %} class="is-featured"{% endif %}>
           <td class="p-item">{{ polozka.nazev }}</td>
-          <td class="p-valid{% if not polozka.platnost %} is-empty{% endif %}" data-label="Platnost">{{ polozka.platnost if polozka.platnost else "—" }}</td>
-          <td class="p-price{% if not polozka.cena %} is-empty{% endif %}" data-label="Cena">{{ polozka.cena if polozka.cena else "—" }}</td>
-          <td class="p-unit{% if not polozka.za_lekci %} is-empty{% endif %}" data-label="Cena za lekci">{{ polozka.za_lekci if polozka.za_lekci else "—" }}</td>
+          <td class="p-valid{% if not polozka.platnost %} is-empty{% endif %}" data-label="Platnost">{% if polozka.platnost %}{{ polozka.platnost }}{% else %}<span class="sr-only">neuvedeno</span>{% endif %}</td>
+          <td class="p-price{% if not polozka.cena %} is-empty{% endif %}" data-label="Cena">{% if polozka.cena %}{{ polozka.cena }}{% else %}<span class="sr-only">neuvedeno</span>{% endif %}</td>
+          <td class="p-unit{% if not polozka.za_lekci %} is-empty{% endif %}" data-label="Cena za lekci">{% if polozka.za_lekci %}{{ polozka.za_lekci }}{% else %}<span class="sr-only">neuvedeno</span>{% endif %}</td>
         </tr>
 {%- endfor %}
       </tbody>
