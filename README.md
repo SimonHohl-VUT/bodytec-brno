@@ -67,8 +67,15 @@ Dlouhé texty (Proč EMS, O mně, kroky u první lekce) přes CMS editovat
 ### Oznámení: proužek a vyskakovací okno
 
 Jedno zapnutí v CMS ovládá dvě věci najednou: **barevný proužek pod menu**
-a **okno, které vyskočí při prvním otevření webu**. Okno se zavře, až ho
-návštěvník potvrdí, takže se oznámení nedá jen tak přehlédnout.
+a **okno, které vyskočí uprostřed obrazovky při prvním otevření webu**.
+
+Okno je schválně **blokující**, jako platební zeď u časopisů: web za ním se
+rozostří a nedá se číst ani používat, dokud ho návštěvník nezavře. Právě proto
+se oznámení nedá přehlédnout a nikdo pak nemůže tvrdit, že ho neviděl.
+
+Zavřít ho jde třemi způsoby a všechny se počítají jako potvrzení: tlačítkem,
+kliknutím mimo okno a klávesou Esc. Esc schválně neblokujeme. Okno, ze kterého
+se nedá dostat klávesnicí, je past a některým lidem by web úplně zavřelo.
 
 V `site.json` → `banner`:
 
@@ -79,7 +86,6 @@ V `site.json` → `banner`:
   "nadpis": "Dnes zavřeno",
   "text": "Dnes je zavřeno z technických důvodů.",
   "vyskakovaci_okno": true,
-  "vyzadovat_potvrzeni": false,
   "tlacitko": "Rozumím",
   "odkaz": "",
   "odkaz_text": "Více informací"
@@ -112,10 +118,7 @@ Potvrzení se ukládá jen do prohlížeče návštěvníka (`localStorage`). Je
 způsob, jak oznámení nešlo minout, **ne důkaz**, že ho někdo konkrétní
 viděl — smaže se s daty webu a v anonymním okně tam není vůbec.
 
-`vyzadovat_potvrzeni` zapíná blokující variantu: okno se postaví přes celou
-stránku a než ho člověk potvrdí, nedá se s webem nic dělat. Nech ji vypnutou,
-pokud nejde o něco vážného. Zavřít okno jde vždy i klávesou Esc; brát lidem
-tuhle možnost by byla past na klávesnici.
+Když chceš jen proužek a žádné okno, vypni `vyskakovaci_okno`.
 
 Bez JavaScriptu okno nevyskočí, ale proužek se vykreslí normálně a je v něm
 celý text — žádná informace nežije jen v okně.

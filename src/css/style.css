@@ -255,79 +255,92 @@ strong { font-weight: 700; }
 .fill :focus-visible { outline-color: var(--ink); }
 
 /* --- oznámení: vyskakovací okno -------------------------------------------
-   Nemodální varianta (.show()) leží dole a stránka pod ní jde dál posouvat.
-   Pozor: .show() NEDÁVÁ prvek do top layeru (to umí jen .showModal()), takže
-   tady musí být vlastní position i z-index. 150 je nad hlavičkou (100)
-   a pod odkazem „Přeskočit na obsah“ (200), aby zůstal dosažitelný.
-   Modální varianta se vystředí — pozná se přes :modal, bez další třídy. */
+   Okno je záměrně BLOKUJÍCÍ, jako platební zeď u časopisů: otevírá se přes
+   .showModal(), stojí uprostřed obrazovky a dokud ho návštěvník nezavře,
+   web za ním není číst ani použít.
+
+   Zavřít ho jde třemi způsoby a všechny se počítají jako potvrzení:
+   tlačítkem, klikem mimo okno a klávesou Esc. Esc schválně neblokujeme,
+   protože okno, ze kterého se nedá dostat klávesnicí, je past.          */
 .oznameni-okno {
-  position: fixed;
-  /* Vpravo dole, ne uprostřed: obsah hero je zarovnaný doleva, takže
-     uprostřed by okno na nižších displejích zakrývalo tlačítka. */
-  inset: auto 1.5rem calc(1.5rem + env(safe-area-inset-bottom)) auto;
-  translate: none;
-  z-index: 150;
-  /* Šířku drží vw, ne procenta: u position:fixed se procento počítá
-     z obsahujícího bloku, což na mobilu vycházelo šířeji než viewport. */
-  width: min(30rem, calc(100vw - 3rem));
-  max-height: calc(100dvh - 4rem);
+  /* Vystředění dělá margin: auto uvnitř inset: 0. Modální dialog je
+     v top layeru, takže z-index tu nehraje roli. */
+  inset: 0;
+  margin: auto;
+  width: min(34rem, calc(100vw - 2.5rem));
+  max-height: calc(100dvh - 3rem);
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 0;
   border: 1px solid var(--line-str);
-  border-top: 4px solid var(--tone);
+  border-top: 5px solid var(--tone);
   border-radius: var(--r);
   background: var(--raised);
   color: var(--white);
   box-shadow: var(--shadow-lift);
 }
-/* Bez JS i ve prohlížeči bez podpory <dialog> musí okno zmizet úplně. */
+/* Bez JS i v prohlížeči bez podpory <dialog> musí okno zmizet úplně. */
 .oznameni-okno:not([open]) { display: none; }
-/* Okno dostává fokus skriptem, aby ho odečítač obrazovky nepřeskočil.
-   Prstenec se tu ale nekreslí: tabindex="-1" znamená, že se sem nedá
-   dostat tabulátorem, takže by to byl jen šum přes barevnou kartu.
-   Ohraničení karty samo o sobě říká, kde okno začíná a končí. */
+/* Okno samo fokus nekreslí: tabindex="-1" znamená, že se sem nedá dostat
+   tabulátorem, takže by prstenec byl jen šum. Tlačítko uvnitř ho má. */
 .oznameni-okno:focus { outline: none; }
 .oznameni-okno[open] { animation: oznameni-in var(--tr-slow) var(--ease) both; }
 
-.oznameni-okno:modal {
-  inset: 0;
-  margin: auto;
-  translate: none;
-}
+/* Web za oknem musí zmizet, ne jen zešednout: skoro neprůhledná vrstva
+   plus silné rozostření, aby se text pod ní nedal číst. */
 .oznameni-okno::backdrop {
-  background: rgba(11, 13, 9, .72);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background: rgba(11, 13, 9, .93);
+  backdrop-filter: blur(16px) saturate(.5);
+  -webkit-backdrop-filter: blur(16px) saturate(.5);
+  animation: oznameni-backdrop var(--tr-slow) var(--ease) both;
 }
 
 @keyframes oznameni-in {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(10px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes oznameni-backdrop {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-.oznameni-okno__body { padding: var(--sp-4) var(--sp-4) var(--sp-3); }
+/* Zamkne rolování na pozadí po dobu, co je okno otevřené. Prohlížeče
+   samy rolování za modálním dialogem nezastaví, tohle je na to obvyklý
+   způsob. Zamyká se html i body, protože podle situace roluje jedno
+   nebo druhé. */
+html.is-locked, html.is-locked body { overflow: hidden; }
+
+.oznameni-okno__body { padding: var(--sp-5) var(--sp-5) var(--sp-4); text-align: center; }
 .oznameni-okno__head {
-  display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem;
+  display: grid; justify-items: center; gap: var(--sp-3); margin-bottom: var(--sp-3);
 }
 .oznameni-okno__icon {
-  flex: none; width: 36px; height: 36px; border-radius: var(--r-sm);
+  flex: none; width: 56px; height: 56px; border-radius: 16px;
   display: grid; place-items: center;
   background: var(--tone); color: var(--ink);
 }
-.oznameni-okno__icon svg { width: 20px; height: 20px; }
+.oznameni-okno__icon svg { width: 30px; height: 30px; }
 .oznameni-okno__nadpis {
-  font-size: 1.22rem; font-weight: 700; line-height: 1.15;
-  letter-spacing: -0.02em; color: var(--white); text-wrap: balance;
+  font-size: clamp(1.5rem, 3.4vw, 1.95rem); font-weight: 800; line-height: 1.1;
+  letter-spacing: -0.03em; color: var(--white); text-wrap: balance;
 }
-.oznameni-okno__text { color: #D5DCC8; font-size: var(--fs-small); }
+.oznameni-okno__text {
+  color: #D5DCC8; font-size: 1.04rem; line-height: 1.6;
+  max-width: 44ch; margin-inline: auto; text-wrap: pretty;
+}
 .oznameni-okno__foot {
-  display: grid; gap: .6rem;
-  padding: 0 var(--sp-4) var(--sp-4);
+  display: grid; gap: .7rem;
+  padding: 0 var(--sp-5) var(--sp-4);
 }
 .oznameni-okno__foot .btn { width: 100%; }
 .oznameni-okno .btn--primary { background: var(--tone); color: var(--ink); }
 .oznameni-okno .btn--primary:hover { background: var(--tone-dk); }
+/* Nápověda, jak okno zavřít. Blokující okno bez viditelného východu je
+   nepřívětivé, i když tlačítko je hned nad ní. */
+.oznameni-okno__napoveda {
+  padding: 0 var(--sp-5) var(--sp-5);
+  color: var(--muted); font-size: .84rem; text-align: center;
+}
 
 /* --- hlavička ------------------------------------------------------------- */
 .header {
@@ -694,13 +707,14 @@ strong { font-weight: 700; }
 
 /* Na úzkém displeji je z nemodálního okna spodní panel přes celou šířku. */
 @media (max-width: 560px) {
-  .oznameni-okno:not(:modal) {
-    /* Šířku určují protilehlé okraje, žádný výpočet, takže nejde přetéct. */
-    inset: auto 0 0 0;
-    translate: none;
+  .oznameni-okno {
+    /* Pořád uprostřed, jen s menšími okraji. Šířku určují protilehlé
+       okraje, svislé vystředění dělá margin: auto ze základního pravidla. */
     width: auto;
-    border-radius: var(--r) var(--r) 0 0;
-    border-inline: 0; border-bottom: 0;
-    padding-bottom: env(safe-area-inset-bottom);
+    inset: .75rem;
+    max-height: calc(100dvh - 1.5rem);
   }
+  .oznameni-okno__body { padding: var(--sp-4) var(--sp-4) var(--sp-3); }
+  .oznameni-okno__foot { padding: 0 var(--sp-4) var(--sp-3); }
+  .oznameni-okno__napoveda { padding: 0 var(--sp-4) var(--sp-4); }
 }

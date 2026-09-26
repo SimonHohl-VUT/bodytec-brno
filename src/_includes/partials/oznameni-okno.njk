@@ -1,17 +1,22 @@
 {#- Vyskakovací okno k oznámení.
 
     Je to nativní <dialog> vykreslený ZAVŘENÝ, takže bez JavaScriptu prostě
-    není vidět a nic se nerozbije. Otevírá ho main.js:
-      - běžně přes .show()      → nemodální, stránka jde dál používat
-      - s `vyzadovat_potvrzeni` → .showModal(), přes celou stránku
+    není vidět a nic se nerozbije. main.js ho otevírá přes .showModal(),
+    tedy blokujícím způsobem: stojí uprostřed obrazovky, web za ním se
+    rozostří a nedá se s ním nic dělat, dokud ho návštěvník nezavře.
 
-    Žádná informace nežije jen tady. Text je vždy i v proužku výš. -#}
+    Zavřít jde tlačítkem, klikem mimo okno nebo klávesou Esc. Všechny tři
+    cesty se počítají jako potvrzení.
+
+    Žádná informace nežije jen tady. Text je vždy i v proužku pod hlavičkou,
+    který se skládá při buildu a platí i bez JavaScriptu. -#}
 {%- if oznameni.zobrazit and oznameni.okno %}
 <dialog class="oznameni oznameni-okno" id="oznameni-okno"
         data-rezim="{{ oznameni.rezim }}"
         data-podpis="{{ oznameni.podpis }}"
-        {%- if oznameni.blokujici %} data-blokujici role="alertdialog"{% endif %}
-        aria-labelledby="oznameni-nadpis" tabindex="-1">
+        aria-labelledby="oznameni-nadpis"
+        aria-describedby="oznameni-text"
+        tabindex="-1">
   <div class="oznameni-okno__body">
     <div class="oznameni-okno__head">
       <span class="oznameni-okno__icon">{{ ikony.ikona(oznameni.rezim) }}</span>
@@ -20,15 +25,14 @@
           aria-labelledby, které funguje na jakémkoliv prvku. -#}
       <p class="oznameni-okno__nadpis" id="oznameni-nadpis">{{ oznameni.nadpis }}</p>
     </div>
-    <p class="oznameni-okno__text">{{ oznameni.text | safe }}</p>
+    <p class="oznameni-okno__text" id="oznameni-text">{{ oznameni.text | safe }}</p>
   </div>
   <div class="oznameni-okno__foot">
     {%- if oznameni.odkaz %}
     <a class="btn btn--ghost btn--sm" href="{{ oznameni.odkaz }}" target="_blank" rel="noopener noreferrer">{{ oznameni.odkaz_text }}</a>
     {%- endif %}
-    {#- U blokující varianty bere fokus rovnou tlačítko, u nemodální ho
-        main.js posadí na celý dialog, aby se oznámení neminulo. -#}
-    <button class="btn btn--primary" type="button" data-zavrit{% if oznameni.blokujici %} autofocus{% endif %}>{{ oznameni.tlacitko }}</button>
+    <button class="btn btn--primary" type="button" data-zavrit autofocus>{{ oznameni.tlacitko }}</button>
   </div>
+  <p class="oznameni-okno__napoveda">Zavřeš i kliknutím mimo okno nebo klávesou Esc.</p>
 </dialog>
 {%- endif %}

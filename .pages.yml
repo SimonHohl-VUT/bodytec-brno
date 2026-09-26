@@ -68,20 +68,11 @@ content:
             type: boolean
             default: true
             description: >-
-              Okno vyskočí při prvním otevření webu a zmizí, až ho návštěvník
-              potvrdí. Pak se mu už neukazuje. Znovu se ukáže všem, jakmile
-              tady změníš text, nadpis nebo typ oznámení. Proužek pod menu je
-              vidět pořád.
-
-          - name: vyzadovat_potvrzeni
-            label: Okno musí návštěvník potvrdit (ztmaví celou stránku)
-            type: boolean
-            default: false
-            description: >-
-              Zapni jen u vážných věcí. Okno se postaví přes celou stránku
-              a než ho člověk potvrdí, nedá se s webem nic dělat. U běžných
-              vzkazů to nech vypnuté: okno pak jen vyjede dole a web jde
-              mezitím normálně používat.
+              Okno vyskočí uprostřed obrazovky při prvním otevření webu.
+              Web za ním se rozostří a nedá se používat, dokud ho návštěvník
+              nezavře (tlačítkem, klikem mimo okno nebo klávesou Esc). Pak se
+              mu už neukazuje. Znovu se ukáže všem, jakmile tady změníš text,
+              nadpis nebo typ oznámení. Proužek pod menu je vidět pořád.
 
           - name: tlacitko
             label: Text potvrzovacího tlačítka
